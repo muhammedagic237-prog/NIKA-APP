@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+<title>Nika's World</title>
+<meta name="theme-color" content="#FDF2F8"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"/>
+<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<style>
+:root{
+--pk:#EC4899;--pk-deep:#BE185D;--pk-med:#F472B6;--pk-light:#FBCFE8;--pk-soft:#FCE7F3;--pk-whisper:#FDF2F8;--pk-glow:rgba(236,72,153,0.25);
+--gold:#F59E0B;--gold-light:#FDE68A;--gold-glow:rgba(245,158,11,0.3);
+--purple:#A855F7;--purple-light:#D8B4FE;--purple-deep:#7C3AED;
+--white:#FFF;--off-white:#FFFBFE;--gray:#F3F0F5;--gray-text:#6B5B73;--dark:#2D1B36;
+--glass:rgba(255,255,255,0.65);--glass-border:rgba(255,255,255,0.4);
+--font:'Nunito',sans-serif;
+--ease-spring:cubic-bezier(0.34,1.56,0.64,1);--ease:cubic-bezier(0.25,1,0.5,1);
+--r-sm:12px;--r-md:20px;--r-lg:28px;--r-xl:36px;--r-pill:9999px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;overflow:hidden}
+body{font-family:var(--font);background:var(--pk-whisper);color:var(--dark);-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent;-webkit-touch-callout:none;user-select:none;touch-action:pan-y}
+img{max-width:100%;display:block}
+
+/* SPLASH */
+@keyframes sparkleFall{0%{opacity:1;transform:translateY(-20vh) translateX(0)}50%{opacity:0.8;transform:translateY(50vh) translateX(15px)}100%{opacity:0;transform:translateY(100vh) translateX(-10px)}}
+@keyframes letterPop{0%{transform:scale(0);opacity:0}60%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}
+@keyframes bounceGroup{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+@keyframes princessIn{from{opacity:0;transform:translateY(15px)}to{opacity:1;transform:translateY(0)}}
+@keyframes goldShimmer{0%{background-position:0% center}100%{background-position:200% center}}
+@keyframes cloudBurst{0%{transform:scale(0);opacity:0.6}100%{transform:scale(3.5);opacity:0}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes floatSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes heartRise{0%{opacity:0;transform:translateY(0) scale(0.5)}20%{opacity:0.6}100%{opacity:0;transform:translateY(-100vh) scale(1.2)}}
+@keyframes particleFloat{0%{transform:translate(0,0);opacity:0.06}25%{transform:translate(15px,-20px);opacity:0.12}50%{transform:translate(-10px,-40px);opacity:0.06}75%{transform:translate(20px,-20px);opacity:0.1}100%{transform:translate(0,0);opacity:0.06}}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+@keyframes starFloat{0%{bottom:-60px;opacity:0;transform:rotate(0deg)}10%{opacity:1}90%{opacity:1}100%{bottom:110%;opacity:0;transform:rotate(180deg)}}
+@keyframes starBurst{0%{transform:scale(1);opacity:1}100%{transform:scale(0);opacity:0}}
+@keyframes bubbleUp{0%{bottom:-80px;opacity:0;transform:scale(0.5)}10%{opacity:1;transform:scale(1)}90%{opacity:0.8}100%{bottom:110%;opacity:0;transform:scale(0.8)}}
+@keyframes pop{0%{transform:scale(1);opacity:1}50%{transform:scale(1.4);opacity:0.5}100%{transform:scale(0);opacity:0}}
+@keyframes keyPress{0%{transform:scaleY(1)}50%{transform:scaleY(0.95)}100%{transform:scaleY(1)}}
+@keyframes noteShow{from{opacity:0;transform:scale(0.5) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes tabBounce{0%{transform:scale(1)}40%{transform:scale(1.2)}100%{transform:scale(1)}}
+
+#splash{position:fixed;inset:0;z-index:9999;background:radial-gradient(ellipse at center,var(--pk-whisper),var(--pk-soft) 60%,var(--pk-light) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden}
+.sparkle{position:absolute;font-size:14px;pointer-events:none;animation:sparkleFall 2.5s ease-in forwards}
+.splash-letters{display:flex;gap:4px;margin-bottom:8px}
+.splash-letter{font-weight:900;font-size:clamp(4rem,15vw,7rem);color:var(--white);text-shadow:0 4px 20px rgba(236,72,153,0.3),0 0 60px rgba(255,255,255,0.8);filter:drop-shadow(0 0 12px rgba(255,255,255,0.6));opacity:0;transform:scale(0);animation:letterPop 0.5s var(--ease-spring) forwards;background:radial-gradient(circle,rgba(255,255,255,0.9) 30%,rgba(255,255,255,0.4) 70%,transparent);-webkit-background-clip:text;display:inline-block;padding:0 4px}
+.splash-bounce{animation:bounceGroup 0.4s var(--ease) forwards}
+.splash-princess{font-weight:700;font-size:clamp(1rem,4vw,1.5rem);letter-spacing:0.3em;background:linear-gradient(135deg,#F59E0B,#FBBF24,#FDE68A,#FBBF24,#F59E0B);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:goldShimmer 2s linear infinite;opacity:0}
+.cloud-burst{position:absolute;width:80px;height:80px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,0.7),rgba(251,207,232,0.3),transparent);pointer-events:none;animation:cloudBurst 0.5s ease-out forwards}
+
+/* TOUCH PUFF */
+#puff-container{position:fixed;inset:0;z-index:9998;pointer-events:none;overflow:hidden}
+.puff{position:absolute;width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,rgba(255,182,193,0.5) 0%,rgba(255,182,193,0.2) 40%,transparent 70%);filter:blur(3px);pointer-events:none;will-change:transform,opacity}
+@keyframes puffAnim{0%{transform:translate(-50%,-50%) scale(0.3);opacity:0.7}60%{transform:translate(-50%,-50%) scale(1);opacity:0.5}100%{transform:translate(-50%,-50%) scale(1.3);opacity:0}}
+
+/* BG PARTICLES */
+.bg-particles{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.bg-p{position:absolute;border-radius:50%;background:rgba(236,72,153,0.08)}
+
+/* BOTTOM NAV */
+.bnav{position:fixed;bottom:0;left:0;right:0;z-index:100;height:64px;background:rgba(255,255,255,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(236,72,153,0.12);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+.bnav-tab{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:all 0.2s;position:relative}
+.bnav-icon{font-size:26px;transition:transform 0.3s var(--ease-spring)}
+.bnav-tab.active .bnav-icon{transform:scale(1.15);animation:tabBounce 0.3s var(--ease-spring)}
+.bnav-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--gray-text);transition:color 0.2s}
+.bnav-tab.active .bnav-label{color:var(--pk)}
+.bnav-dot{position:absolute;bottom:6px;width:4px;height:4px;border-radius:50%;background:var(--pk);opacity:0;transition:opacity 0.2s}
+.bnav-tab.active .bnav-dot{opacity:1}
+
+/* APP CONTAINER */
+.app-content{position:fixed;inset:0;bottom:64px;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;z-index:1}
+
+/* SECTION HEADERS */
+.sec-title{font-weight:900;font-size:clamp(1.8rem,6vw,2.4rem);text-align:center;padding:28px 20px 0}
+.sec-title em{font-style:normal;background:linear-gradient(135deg,var(--pk),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+
+/* EMPTY STATE */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;min-height:60vh}
+.empty-cloud{position:relative;width:120px;height:60px;margin-bottom:24px;animation:float 3s ease-in-out infinite}
+.empty-cloud-body{position:absolute;width:80px;height:50px;border-radius:50%;background:var(--pk-light);top:10px;left:20px}
+.empty-cloud-l{position:absolute;width:50px;height:40px;border-radius:50%;background:var(--pk-light);top:15px;left:5px}
+.empty-cloud-r{position:absolute;width:60px;height:45px;border-radius:50%;background:var(--pk-light);top:8px;left:55px}
+.empty-text{font-weight:700;font-size:1.3rem;color:var(--pk);margin-bottom:8px}
+.empty-sub{font-weight:600;font-size:0.9rem;color:var(--gray-text)}
+
+/* GAMES HUB */
+.games-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:20px}
+.game-card{aspect-ratio:1;border-radius:var(--r-lg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;position:relative;overflow:hidden;transition:transform 0.2s var(--ease-spring);border:2.5px solid rgba(255,255,255,0.25);box-shadow:0 8px 32px rgba(190,24,93,0.15)}
+.game-card:active{transform:scale(0.92)}
+.game-card-icon{font-size:3.5rem;animation:float 3s ease-in-out infinite}
+.game-card-label{font-weight:800;font-size:13px;letter-spacing:0.8px;text-transform:uppercase;color:var(--white);text-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.game-card-sparkle{position:absolute;opacity:0.5;font-size:14px;pointer-events:none}
+
+/* GAME CONTAINER */
+.game-view{position:fixed;inset:0;z-index:200;overflow:hidden}
+.game-back{position:fixed;top:16px;left:16px;z-index:210;width:48px;height:48px;border-radius:50%;background:var(--pk);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;box-shadow:0 4px 20px var(--pk-glow);cursor:pointer;transition:transform 0.2s}
+.game-back:active{transform:scale(0.9)}
+.game-score{position:fixed;top:16px;right:16px;z-index:210;padding:8px 18px;border-radius:var(--r-pill);background:rgba(255,255,255,0.2);backdrop-filter:blur(12px);color:var(--white);font-weight:800;font-size:16px;box-shadow:0 4px 16px rgba(0,0,0,0.1)}
+
+/* STAR CATCHER */
+.star-game{position:absolute;inset:0;background:linear-gradient(180deg,#2D1B36 0%,#4A1942 40%,#1A0A1F 100%);overflow:hidden;touch-action:none}
+.star{position:absolute;cursor:pointer;transition:transform 0.1s}
+.star:active{transform:scale(0.8)}
+.star-body{position:relative;display:flex;align-items:center;justify-content:center}
+.star-particle{position:absolute;border-radius:50%;pointer-events:none;animation:starBurst 0.4s ease-out forwards}
+.twinkle{position:absolute;width:2px;height:2px;border-radius:50%;background:rgba(255,182,193,0.5);pointer-events:none}
+
+/* BUBBLE POP */
+.bubble-game{position:absolute;inset:0;background:linear-gradient(180deg,var(--pk-whisper),var(--pk-soft),var(--pk-light));overflow:hidden;touch-action:none}
+.bubble{position:absolute;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;cursor:pointer;box-shadow:inset -4px -4px 10px rgba(255,255,255,0.5),inset 4px 4px 10px rgba(0,0,0,0.05),0 4px 16px rgba(0,0,0,0.1);transition:transform 0.1s}
+.bubble:active{transform:scale(0.9)}
+.bubble.popping{animation:pop 0.3s ease-out forwards}
+
+/* PIANO */
+.piano-game{position:absolute;inset:0;background:linear-gradient(180deg,var(--pk-whisper),var(--pk-soft));display:flex;flex-direction:column;overflow:hidden}
+.piano-display{flex:0 0 30%;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px}
+.piano-note{font-size:4rem;animation:noteShow 0.3s var(--ease-spring)}
+.piano-note-name{font-weight:900;font-size:1.4rem;color:var(--pk-deep);letter-spacing:2px}
+.piano-keys{flex:1;display:flex;gap:6px;padding:12px;align-items:stretch}
+.piano-key{flex:1;border-radius:var(--r-md);display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:20px;gap:8px;cursor:pointer;transition:all 0.15s;border:none;font-family:var(--font);box-shadow:0 6px 20px rgba(0,0,0,0.1),inset 0 -4px 0 rgba(0,0,0,0.1)}
+.piano-key:active{transform:scaleY(0.96);filter:brightness(1.1)}
+.piano-key-emoji{font-size:1.6rem}
+.piano-key-label{font-weight:800;font-size:11px;color:rgba(255,255,255,0.9);text-shadow:0 1px 3px rgba(0,0,0,0.15)}
+
+/* PRINCESS PROFILE */
+.princess{padding:20px 20px 100px;min-height:100%}
+.princess-crown{text-align:center;font-size:5rem;margin:20px 0 12px;animation:float 4s ease-in-out infinite;filter:drop-shadow(0 4px 20px var(--gold-glow))}
+.princess-name{text-align:center;font-weight:900;font-size:2.2rem;margin-bottom:4px;background:linear-gradient(135deg,#F59E0B,#FBBF24,#FDE68A,#FBBF24,#F59E0B);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:goldShimmer 2s linear infinite}
+.princess-sub{text-align:center;font-size:0.9rem;color:var(--gray-text);margin-bottom:28px}
+.princess-card{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--glass-border);border-radius:var(--r-lg);padding:18px 20px;margin-bottom:14px;display:flex;align-items:center;gap:16px;box-shadow:0 4px 20px rgba(190,24,93,0.06)}
+.princess-card-icon{font-size:2rem;flex-shrink:0}
+.princess-card-title{font-weight:800;font-size:0.95rem;color:var(--dark)}
+.princess-card-sub{font-weight:600;font-size:0.8rem;color:var(--gray-text);margin-top:2px}
+.princess-colors{display:flex;justify-content:center;gap:12px;margin-top:20px}
+.princess-color{width:28px;height:28px;border-radius:50%;box-shadow:0 3px 10px rgba(0,0,0,0.1)}
+.hearts-bg{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+.heart{position:absolute;pointer-events:none;animation:heartRise linear infinite}
+
+/* RESPONSIVE */
+@media(min-width:768px){.games-grid{max-width:400px;margin:0 auto}.app-content{max-width:500px;margin:0 auto}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}#splash{display:none!important}}
+</style>
+</head>
+<body>
+<div id="puff-container"></div>
+<div id="root"></div>
+<script type="text/babel">
+const{useState,useEffect,useRef,useMemo,useCallback,memo}=React;
+
+/* ═══ AUDIO ENGINE ═══ */
+let audioCtx;
+function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();if(audioCtx.state==='suspended')audioCtx.resume();return audioCtx;}
+function playNote(freq,dur=0.3,type='sine'){try{const c=getAudio();const o=c.createOscillator();const g=c.createGain();o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0.15,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+dur);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+dur);}catch(e){}}
+function playPop(){try{const c=getAudio();const o=c.createOscillator();const g=c.createGain();o.type='sine';o.frequency.setValueAtTime(600,c.currentTime);o.frequency.exponentialRampToValueAtTime(1200,c.currentTime+0.08);g.gain.setValueAtTime(0.12,c.currentTime);g.gain.exponentialRampToValueAtTime(0.001,c.currentTime+0.15);o.connect(g);g.connect(c.destination);o.start();o.stop(c.currentTime+0.15);}catch(e){}}
+function playSuccess(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playNote(f,0.2),i*120));}
+function vibrate(ms=20){try{navigator.vibrate&&navigator.vibrate(ms);}catch(e){}}
+
+const PIANO_NOTES=[
+  {note:'C',freq:261.63,color:'#F43F5E',emoji:'🌹'},
+  {note:'D',freq:293.66,color:'#EC4899',emoji:'🌸'},
+  {note:'E',freq:329.63,color:'#F59E0B',emoji:'👑'},
+  {note:'F',freq:349.23,color:'#D946EF',emoji:'🦄'},
+  {note:'G',freq:392.00,color:'#A855F7',emoji:'🦋'},
+  {note:'A',freq:440.00,color:'#C084FC',emoji:'💜'},
+  {note:'B',freq:493.88,color:'#FB7185',emoji:'💗'},
+  {note:'C²',freq:523.25,color:'#BE185D',emoji:'👸'}
+];
+const BUBBLE_COLORS=[
+  {name:'Rose',color:'#F43F5E',emoji:'🌹'},
+  {name:'Pink',color:'#EC4899',emoji:'💗'},
+  {name:'Magic',color:'#D946EF',emoji:'🦄'},
+  {name:'Violet',color:'#A855F7',emoji:'🦋'},
+  {name:'Coral',color:'#FB7185',emoji:'🌸'},
+  {name:'Gold',color:'#F59E0B',emoji:'👑'},
+  {name:'Lavender',color:'#C084FC',emoji:'💜'}
+];
+
+/* ═══ TOUCH PUFF SYSTEM ═══ */
+function initPuffs(){
+  const container=document.getElementById('puff-container');
+  let count=0;
+  const handler=(e)=>{
+    if(count>=5)return;
+    const x=e.clientX||e.touches?.[0]?.clientX;
+    const y=e.clientY||e.touches?.[0]?.clientY;
+    if(!x||!y)return;
+    count++;
+    const p=document.createElement('div');
+    p.className='puff';
+    p.style.left=x+'px';p.style.top=y+'px';
+    p.style.animation='puffAnim 0.2s ease-out forwards';
+    container.appendChild(p);
+    setTimeout(()=>{p.remove();count--;},200);
+  };
+  document.addEventListener('pointerdown',handler);
+}
+
+/* ═══ SPLASH ═══ */
+function Splash({onDone}){
+  const[phase,setPhase]=useState(0);
+  useEffect(()=>{
+    const t1=setTimeout(()=>setPhase(1),400);// letters start
+    const t2=setTimeout(()=>setPhase(2),1200);// bounce
+    const t3=setTimeout(()=>setPhase(3),1400);// princess
+    const t4=setTimeout(()=>setPhase(4),2600);// exit
+    const t5=setTimeout(onDone,3000);
+    return()=>{[t1,t2,t3,t4,t5].forEach(clearTimeout);};
+  },[]);
+
+  const sparkles=useMemo(()=>Array.from({length:18},(_,i)=>({i,left:Math.random()*100,delay:Math.random()*600})),[]);
+
+  return(
+    <div id="splash" style={{opacity:phase>=4?0:1,transition:'opacity 0.4s'}}>
+      {sparkles.map(s=><div key={s.i} className="sparkle" style={{left:s.left+'%',animationDelay:s.delay+'ms'}}>✨</div>)}
+      <div className={`splash-letters ${phase>=2?'splash-bounce':''}`}>
+        {'NIKA'.split('').map((ch,i)=><span key={i} className="splash-letter" style={{animationDelay:(400+i*150)+'ms'}}>{ch}</span>)}
+      </div>
+      <div className="splash-princess" style={{opacity:phase>=3?1:0,transition:'opacity 0.4s',animation:phase>=3?'princessIn 0.4s var(--ease) forwards,goldShimmer 2s linear 0.5s infinite':'none'}}>
+        👑 Princess
+      </div>
+      {phase>=4&&[0,1,2,3,4].map(i=><div key={i} className="cloud-burst" style={{animationDelay:i*60+'ms'}}/>)}
+    </div>
+  );
+}
+
+/* ═══ BG PARTICLES ═══ */
+function BgParticles(){
+  const p=useMemo(()=>Array.from({length:18},(_,i)=>({i,x:Math.random()*100,y:Math.random()*100,s:3+Math.random()*8,dur:8+Math.random()*7,delay:Math.random()*5})),[]);
+  return(<div className="bg-particles">{p.map(pt=><div key={pt.i} className="bg-p" style={{left:pt.x+'%',top:pt.y+'%',width:pt.s,height:pt.s,animation:`particleFloat ${pt.dur}s ease-in-out ${pt.delay}s infinite`}}/>)}</div>);
+}
+
+/* ═══ STAR CATCHER GAME ═══ */
+function StarCatcher({onBack}){
+  const[stars,setStars]=useState([]);
+  const[score,setScore]=useState(0);
+  const[particles,setParticles]=useState([]);
+  const idRef=useRef(0);
+  const gameRef=useRef(null);
+
+  useEffect(()=>{
+    // Twinkle dots
+    const tw=[];for(let i=0;i<40;i++){tw.push({id:i,left:Math.random()*100+'%',top:Math.random()*100+'%',size:1+Math.random()*2,opacity:0.3+Math.random()*0.4,dur:2+Math.random()*3});}
+    gameRef.current._twinkles=tw;
+    // Spawn stars
+    const interval=setInterval(()=>{
+      const hues=[320,330,340,350,0,10,40,50,270,280,290];
+      const hue=hues[Math.floor(Math.random()*hues.length)];
+      const size=40+Math.random()*30;
+      setStars(prev=>[...prev.slice(-12),{id:++idRef.current,x:10+Math.random()*80,size,hue,y:110,speed:0.3+Math.random()*0.5}]);
+    },800);
+    return()=>clearInterval(interval);
+  },[]);
+
+  // Move stars up
+  useEffect(()=>{
+    const raf=setInterval(()=>{
+      setStars(prev=>prev.map(s=>({...s,y:s.y-s.speed})).filter(s=>s.y>-10));
+    },30);
+    return()=>clearInterval(raf);
+  },[]);
+
+  const popStar=(id,x,y)=>{
+    playPop();vibrate();
+    setScore(s=>{const n=s+1;if(n%10===0)playSuccess();return n;});
+    setStars(prev=>prev.filter(s=>s.id!==id));
+    // Particles
+    const pp=Array.from({length:6},(_,i)=>({id:Date.now()+i,x:x+Math.random()*40-20,y:y+Math.random()*40-20,color:`hsl(${330+Math.random()*60},80%,65%)`,size:4+Math.random()*6}));
+    setParticles(prev=>[...prev,...pp]);
+    setTimeout(()=>setParticles(prev=>prev.filter(p=>!pp.includes(p))),400);
+  };
+
+  return(
+    <div className="game-view">
+      <div className="star-game" ref={gameRef}>
+        {/* Twinkles */}
+        {Array.from({length:40},(_,i)=><div key={i} className="twinkle" style={{left:Math.random()*100+'%',top:Math.random()*100+'%',width:1+Math.random()*2,height:1+Math.random()*2,opacity:0.3+Math.random()*0.4,animation:`fadeIn ${2+Math.random()*3}s ease-in-out ${Math.random()*3}s infinite alternate`}}/>)}
+        {/* Stars */}
+        {stars.map(s=>(
+          <div key={s.id} className="star" style={{left:s.x+'%',bottom:s.y+'%',width:s.size,height:s.size}} onPointerDown={()=>popStar(s.id,s.x,s.y)}>
+            <svg viewBox="0 0 100 100" style={{width:'100%',filter:`drop-shadow(0 0 8px hsla(${s.hue},80%,65%,0.6))`}}>
+              <polygon points="50,5 63,35 95,40 72,62 78,95 50,80 22,95 28,62 5,40 37,35" fill={`hsl(${s.hue},80%,65%)`}/>
+              <circle cx="38" cy="42" r="4" fill="rgba(0,0,0,0.25)"/><circle cx="62" cy="42" r="4" fill="rgba(0,0,0,0.25)"/>
+              <path d="M38 58 Q50 68 62 58" fill="none" stroke="rgba(0,0,0,0.2)" strokeWidth="3" strokeLinecap="round"/>
+            </svg>
+          </div>
+        ))}
+        {/* Particles */}
+        {particles.map(p=><div key={p.id} className="star-particle" style={{left:p.x+'%',bottom:p.y+'%',width:p.size,height:p.size,background:p.color}}/>)}
+      </div>
+      <button className="game-back" onClick={onBack}>&larr;</button>
+      <div className="game-score">⭐ {score}</div>
+    </div>
+  );
+}
+
+/* ═══ BUBBLE POP GAME ═══ */
+function BubblePop({onBack}){
+  const[bubbles,setBubbles]=useState([]);
+  const[score,setScore]=useState(0);
+  const idRef=useRef(0);
+
+  useEffect(()=>{
+    const interval=setInterval(()=>{
+      const bc=BUBBLE_COLORS[Math.floor(Math.random()*BUBBLE_COLORS.length)];
+      const size=50+Math.random()*30;
+      setBubbles(prev=>[...prev.slice(-10),{id:++idRef.current,x:10+Math.random()*75,size,color:bc.color,emoji:bc.emoji,y:-10,speed:0.2+Math.random()*0.3,popping:false}]);
+    },900);
+    return()=>clearInterval(interval);
+  },[]);
+
+  useEffect(()=>{
+    const raf=setInterval(()=>{
+      setBubbles(prev=>prev.map(b=>b.popping?b:{...b,y:b.y+b.speed}).filter(b=>b.y<115||b.popping));
+    },30);
+    return()=>clearInterval(raf);
+  },[]);
+
+  const popBubble=(id)=>{
+    playPop();vibrate();
+    setScore(s=>{const n=s+1;if(n%10===0)playSuccess();return n;});
+    setBubbles(prev=>prev.map(b=>b.id===id?{...b,popping:true}:b));
+    setTimeout(()=>setBubbles(prev=>prev.filter(b=>b.id!==id)),300);
+  };
+
+  return(
+    <div className="game-view">
+      <div className="bubble-game">
+        {bubbles.map(b=>(
+          <div key={b.id} className={`bubble ${b.popping?'popping':''}`}
+            style={{left:b.x+'%',bottom:b.y+'%',width:b.size,height:b.size,background:`radial-gradient(circle at 35% 35%,rgba(255,255,255,0.6),${b.color})`}}
+            onPointerDown={()=>!b.popping&&popBubble(b.id)}>
+            {b.emoji}
+          </div>
+        ))}
+      </div>
+      <button className="game-back" onClick={onBack}>&larr;</button>
+      <div className="game-score">🫧 {score}</div>
+    </div>
+  );
+}
+
+/* ═══ PIANO GAME ═══ */
+function NikaPiano({onBack}){
+  const[activeNote,setActiveNote]=useState(null);
+
+  const playKey=(n)=>{
+    getAudio();
+    playNote(n.freq,0.5,'sine');
+    vibrate(15);
+    setActiveNote(n);
+    setTimeout(()=>setActiveNote(null),500);
+  };
+
+  return(
+    <div className="game-view">
+      <div className="piano-game">
+        <div className="piano-display">
+          {activeNote?<>
+            <div className="piano-note" key={activeNote.note}>{activeNote.emoji}</div>
+            <div className="piano-note-name">{activeNote.note}</div>
+          </>:<>
+            <div style={{fontSize:'2.5rem'}}>🎹</div>
+            <div style={{fontWeight:700,color:'var(--pk-deep)',letterSpacing:2}}>TAP TO PLAY</div>
+          </>}
+        </div>
+        <div className="piano-keys">
+          {PIANO_NOTES.map(n=>(
+            <button key={n.note} className="piano-key" style={{background:`linear-gradient(180deg,${n.color},${n.color}cc)`}} onPointerDown={()=>playKey(n)}>
+              <span className="piano-key-emoji">{n.emoji}</span>
+              <span className="piano-key-label">{n.note}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <button className="game-back" onClick={onBack}>&larr;</button>
+    </div>
+  );
+}
+
+/* ═══ GAMES HUB ═══ */
+function GamesHub({onPlay}){
+  const games=[
+    {id:'stars',icon:'⭐',label:'Stars',grad:'linear-gradient(145deg,#EC4899,#F472B6,#FBCFE8)'},
+    {id:'bubbles',icon:'🫧',label:'Bubbles',grad:'linear-gradient(145deg,#A855F7,#C084FC,#E9D5FF)'},
+    {id:'piano',icon:'🎹',label:'Music',grad:'linear-gradient(145deg,#F472B6,#EC4899,#BE185D)'},
+    {id:'soon',icon:'🎁',label:'Soon',grad:'linear-gradient(145deg,#D1D5DB,#E5E7EB,#F3F4F6)'}
+  ];
+  return(
+    <div style={{padding:'0 0 100px'}}>
+      <div className="sec-title">Let's Play! <em>🎮</em></div>
+      <div className="games-grid">
+        {games.map((g,i)=>(
+          <div key={g.id} className="game-card" style={{background:g.grad,animationDelay:i*0.12+'s',opacity:g.id==='soon'?0.5:1}} onClick={()=>g.id!=='soon'&&onPlay(g.id)}>
+            <span className="game-card-sparkle" style={{top:8,left:10}}>✨</span>
+            <span className="game-card-sparkle" style={{bottom:10,right:12}}>✨</span>
+            <span className="game-card-icon" style={{animationDelay:i*0.3+'s'}}>{g.icon}</span>
+            <span className="game-card-label">{g.label}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ═══ CARTOONS (EMPTY STATE) ═══ */
+function Cartoons(){
+  return(
+    <div className="empty">
+      <div className="empty-cloud">
+        <div className="empty-cloud-body"></div>
+        <div className="empty-cloud-l"></div>
+        <div className="empty-cloud-r"></div>
+      </div>
+      <div className="empty-text">Coming soon!</div>
+      <div className="empty-sub">Nika's cartoons will appear here ✨</div>
+    </div>
+  );
+}
+
+/* ═══ PRINCESS PROFILE ═══ */
+function Princess(){
+  const cards=[
+    {icon:'⭐',title:'Star Catcher Champion',sub:'Catches stars in the sky'},
+    {icon:'🫧',title:'Bubble Master',sub:'Pops bubbles like magic'},
+    {icon:'🎹',title:'Piano Princess',sub:'Loves making music'},
+    {icon:'📺',title:'Cartoon Time',sub:'Coming soon!'},
+    {icon:'🌸',title:'Favorite Color',sub:'Pink, of course!'},
+    {icon:'👑',title:'Royal Title',sub:'Princess of Everything'}
+  ];
+  const colors=['#F43F5E','#EC4899','#D946EF','#A855F7','#F59E0B','#FB7185'];
+  const hearts=useMemo(()=>Array.from({length:10},(_,i)=>({i,left:Math.random()*100,size:10+Math.random()*16,dur:6+Math.random()*8,delay:Math.random()*8})),[]);
+
+  return(
+    <div className="princess" style={{position:'relative'}}>
+      <div className="hearts-bg">{hearts.map(h=><div key={h.i} className="heart" style={{left:h.left+'%',bottom:0,fontSize:h.size,animationDuration:h.dur+'s',animationDelay:h.delay+'s'}}>💕</div>)}</div>
+      <div style={{position:'relative',zIndex:1}}>
+        <div className="princess-crown">👑</div>
+        <div className="princess-name">Princess Nika</div>
+        <div className="princess-sub">Welcome to your magical world ✨</div>
+        {cards.map((c,i)=>(
+          <div key={i} className="princess-card" style={{animation:`fadeUp 0.4s var(--ease) ${i*0.08}s both`}}>
+            <span className="princess-card-icon">{c.icon}</span>
+            <div><div className="princess-card-title">{c.title}</div><div className="princess-card-sub">{c.sub}</div></div>
+          </div>
+        ))}
+        <div className="princess-colors">{colors.map((c,i)=><div key={i} className="princess-color" style={{background:c,animation:`pulse 2s ease-in-out ${i*0.3}s infinite`}}/>)}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══ APP ═══ */
+function App(){
+  const[splash,setSplash]=useState(()=>!sessionStorage.getItem('nika_splash')&&!window.matchMedia('(prefers-reduced-motion:reduce)').matches);
+  const[tab,setTab]=useState('games');
+  const[game,setGame]=useState(null);
+
+  useEffect(()=>{initPuffs();},[]);
+  // Audio unlock on first touch
+  useEffect(()=>{const h=()=>{getAudio();document.removeEventListener('touchstart',h);};document.addEventListener('touchstart',h);return()=>document.removeEventListener('touchstart',h);},[]);
+
+  if(splash)return <Splash onDone={()=>{setSplash(false);sessionStorage.setItem('nika_splash','1');}}/>;
+
+  // Active game
+  if(game==='stars')return <StarCatcher onBack={()=>setGame(null)}/>;
+  if(game==='bubbles')return <BubblePop onBack={()=>setGame(null)}/>;
+  if(game==='piano')return <NikaPiano onBack={()=>setGame(null)}/>;
+
+  return(
+    <>
+      <BgParticles/>
+      <div className="app-content">
+        {tab==='cartoons'&&<Cartoons/>}
+        {tab==='games'&&<GamesHub onPlay={setGame}/>}
+        {tab==='princess'&&<Princess/>}
+      </div>
+      <nav className="bnav">
+        {[{id:'cartoons',icon:'🎬',label:'Cartoons'},{id:'games',icon:'🎮',label:'Games'},{id:'princess',icon:'👑',label:'Princess'}].map(t=>(
+          <div key={t.id} className={`bnav-tab ${tab===t.id?'active':''}`} onClick={()=>{setTab(t.id);getAudio();playNote(800,0.05);}}>
+            <span className="bnav-icon">{t.icon}</span>
+            <span className="bnav-label">{t.label}</span>
+            <span className="bnav-dot"></span>
+          </div>
+        ))}
+      </nav>
+    </>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
