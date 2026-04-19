@@ -1,0 +1,32 @@
+export const cartoons = [
+  {
+    id: 'starlight-ride',
+    title: 'Starlight Ride',
+    duration: '6 min',
+    description: 'A calm travel-time cartoon slot. Replace with Nika’s favorite video file.',
+    fileName: 'starlight-ride.mp4',
+    src: '/videos/starlight-ride.mp4',
+    emoji: '🌟',
+    color: 'pink',
+  },
+  {
+    id: 'magic-garden',
+    title: 'Magic Garden',
+    duration: '8 min',
+    description: 'A gentle story slot for offline watching on a cheap tablet.',
+    fileName: 'magic-garden.mp4',
+    src: '/videos/magic-garden.mp4',
+    emoji: '🦋',
+    color: 'purple',
+  },
+  {
+    id: 'rainbow-pasta-party',
+    title: 'Rainbow Pasta Party',
+    duration: '5 min',
+    description: 'A cheerful short clip slot. Swap in any MP4 that plays cleanly offline.',
+    fileName: 'rainbow-pasta-party.mp4',
+    src: '/videos/rainbow-pasta-party.mp4',
+    emoji: '🌈',
+    color: 'gold',
+  },
+]
