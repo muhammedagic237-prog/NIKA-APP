@@ -50,6 +50,19 @@ code {
   overflow: hidden;
 }
 
+.app-shell::before {
+  content: '✦  ✦  ✦';
+  position: fixed;
+  top: 26px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(219, 39, 119, 0.28);
+  letter-spacing: 1.4rem;
+  font-size: 1.1rem;
+  pointer-events: none;
+  z-index: 0;
+}
+
 .app-shell__bg {
   position: fixed;
   border-radius: 999px;
@@ -402,6 +415,25 @@ code {
   text-align: center;
 }
 
+.shelf-banner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 18px;
+}
+
+.shelf-banner__pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.82);
+  border: 1px solid rgba(236, 72, 153, 0.12);
+  color: var(--rose-deep);
+  font-size: 0.84rem;
+  font-weight: 800;
+}
+
 .cartoons-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -432,6 +464,7 @@ code {
 
 .cartoon-card.is-active {
   border-color: #ec4899;
+  box-shadow: 0 18px 36px rgba(219, 39, 119, 0.16);
 }
 
 .cartoon-card--pink {
@@ -456,6 +489,32 @@ code {
   font-size: 1.8rem;
 }
 
+.cartoon-card__content {
+  display: grid;
+  gap: 4px;
+}
+
+.cartoon-card__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cartoon-card__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  color: var(--rose-deep);
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
 .cartoon-card__meta,
 .cartoon-card__file {
   font-size: 0.86rem;
@@ -467,6 +526,26 @@ code {
   gap: 14px;
 }
 
+.player-shell__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.now-watching {
+  display: inline-flex;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, rgba(251, 207, 232, 0.86), rgba(244, 114, 182, 0.22));
+  color: var(--rose-deep);
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
 .player-shell h3,
 .section-copy h2,
 .game-card-shell h3 {
@@ -474,11 +553,28 @@ code {
 }
 
 .video-frame {
+  position: relative;
   border-radius: 24px;
   overflow: hidden;
   background: #4a1632;
   min-height: 220px;
-  box-shadow: inset 0 0 0 1px rgba(255, 210, 234, 0.24);
+  box-shadow: inset 0 0 0 1px rgba(255, 210, 234, 0.24), 0 16px 34px rgba(74, 22, 50, 0.18);
+}
+
+.video-frame::before {
+  content: 'Princess movie time';
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 247, 251, 0.86);
+  color: var(--rose-deep);
+  font-size: 0.74rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
 }
 
 .video-player {
@@ -507,6 +603,25 @@ code {
   justify-content: space-between;
   gap: 12px;
   align-items: center;
+}
+
+.game-kicker {
+  margin: 0 0 6px;
+  color: #be185d;
+  font-size: 0.78rem;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.game-ribbon {
+  margin-bottom: 12px;
+  padding: 10px 14px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.86), rgba(251, 207, 232, 0.68));
+  color: var(--rose-deep);
+  font-weight: 800;
+  box-shadow: inset 0 0 0 1px rgba(236, 72, 153, 0.12);
 }
 
 .stats-row {
@@ -561,11 +676,11 @@ code {
 
 .memory-card {
   aspect-ratio: 1;
-  border-radius: 18px;
+  border-radius: 20px;
   background: linear-gradient(135deg, #f9a8d4, #ec4899);
   color: #fff;
   font-size: 2rem;
-  box-shadow: 0 10px 24px rgba(236, 72, 153, 0.18);
+  box-shadow: 0 12px 28px rgba(236, 72, 153, 0.2);
 }
 
 .memory-card.is-open {
@@ -587,9 +702,20 @@ code {
 .balloon-area {
   position: relative;
   min-height: 260px;
-  border-radius: 22px;
+  border-radius: 24px;
   background: linear-gradient(180deg, #fff7fb, #ffd8ec);
   overflow: hidden;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.55);
+}
+
+.balloon-area::before {
+  content: '☁️   ✨   ☁️';
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(143, 20, 81, 0.34);
+  letter-spacing: 0.5rem;
 }
 
 .balloon-help {
@@ -660,6 +786,11 @@ code {
   font-size: 1.3rem;
 }
 
+.tabbar__label {
+  font-size: 0.83rem;
+  letter-spacing: 0.02em;
+}
+
 @keyframes title-pop {
   0% {
     opacity: 0;
@@ -711,6 +842,18 @@ code {
 }
 
 @media (max-width: 560px) {
+  .player-shell__header {
+    display: grid;
+  }
+
+  .shelf-banner {
+    gap: 6px;
+  }
+
+  .cartoon-card__topline {
+    align-items: flex-start;
+  }
+
   .hero-card,
   .feature-grid,
   .game-card-shell__head,

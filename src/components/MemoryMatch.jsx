@@ -69,6 +69,7 @@ export default function MemoryMatch() {
     <div className="game-card-shell">
       <div className="game-card-shell__head">
         <div>
+          <p className="game-kicker">Princess game</p>
           <h3>Memory Match</h3>
           <p className="muted">Match the same cute icons. Gentle, simple, tablet-friendly.</p>
         </div>
@@ -81,6 +82,8 @@ export default function MemoryMatch() {
         <span>Moves: {moves}</span>
         <span>Pairs: {matches}/{icons.length}</span>
       </div>
+
+      <div className="game-ribbon">Find the matching princess treasures</div>
 
       <div className="memory-grid">
         {deck.map((card) => {

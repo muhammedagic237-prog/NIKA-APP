@@ -25,23 +25,31 @@ export default function CartoonPlayer() {
     <section className="panel panel--soft">
       <div className="section-copy">
         <p className="eyebrow">Offline cartoons</p>
-        <h2>Travel-ready cartoon shelf</h2>
+        <h2>Princess cartoon shelf</h2>
         <p>
-          Drop MP4 files into <code>public/videos</code> with the exact names shown below, then
-          rebuild the app. That keeps everything local and internet-free on the tablet.
+          Nika&apos;s favorite videos live here for soft, easy offline watching on the tablet.
         </p>
       </div>
 
+      <div className="shelf-banner">
+        <span className="shelf-banner__pill">🎀 Ready for travel</span>
+        <span className="shelf-banner__pill">💾 Offline videos</span>
+        <span className="shelf-banner__pill">✨ Tap to watch</span>
+      </div>
+
       <div className="cartoons-grid">
-        {cartoons.map((cartoon) => (
+        {cartoons.map((cartoon, index) => (
           <button
             key={cartoon.id}
             className={`cartoon-card cartoon-card--${cartoon.color} ${selectedId === cartoon.id ? 'is-active' : ''}`}
             onClick={() => setSelectedId(cartoon.id)}
           >
             <div className="cartoon-card__emoji">{cartoon.emoji}</div>
-            <div>
-              <strong>{cartoon.title}</strong>
+            <div className="cartoon-card__content">
+              <div className="cartoon-card__topline">
+                <strong>{cartoon.title}</strong>
+                <span className="cartoon-card__badge">#{index + 1}</span>
+              </div>
               <div className="cartoon-card__meta">{cartoon.duration}</div>
               <div className="cartoon-card__file">{cartoon.fileName}</div>
             </div>
@@ -50,9 +58,12 @@ export default function CartoonPlayer() {
       </div>
 
       <div className="player-shell">
-        <div>
-          <h3>{selected.title}</h3>
-          <p className="muted">{selected.description}</p>
+        <div className="player-shell__header">
+          <div>
+            <h3>{selected.title}</h3>
+            <p className="muted">{selected.description}</p>
+          </div>
+          <span className="now-watching">Now watching</span>
         </div>
 
         <div className="video-frame">

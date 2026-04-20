@@ -64,6 +64,7 @@ export default function BalloonPop() {
     <div className="game-card-shell">
       <div className="game-card-shell__head">
         <div>
+          <p className="game-kicker">Princess game</p>
           <h3>Balloon Pop</h3>
           <p className="muted">Tap the floating balloons before the timer ends.</p>
         </div>
@@ -76,6 +77,8 @@ export default function BalloonPop() {
         <span>Time: {timeLeft}s</span>
         <span>Score: {score}</span>
       </div>
+
+      <div className="game-ribbon">Pop sparkly balloons before the timer runs out</div>
 
       <div className="balloon-area">
         {balloons.map((balloon) => (

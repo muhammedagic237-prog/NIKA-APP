@@ -14,7 +14,7 @@ export default function TabBar({ activeTab, onChange }) {
           onClick={() => onChange(tab.key)}
         >
           <span className="tabbar__icon">{tab.icon}</span>
-          <span>{tab.label}</span>
+          <span className="tabbar__label">{tab.label}</span>
         </button>
       ))}
     </nav>
