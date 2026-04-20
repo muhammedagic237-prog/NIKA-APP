@@ -17,9 +17,15 @@ A lightweight custom kid app for a cheap tablet.
 - Games
 
 ## How to add local cartoons
-Put MP4 files in `public/videos`.
+### Easy workflow
+1. Put source cartoon files in:
+   - `C:\Users\HP\Videos\NikaSource`
+2. Run:
+   - `C:\Users\HP\Desktop\Compress Nika Cartoons.bat`
+3. Compressed MP4 files will be written into:
+   - `public/videos`
 
-Current starter file names expected by the app:
+### Current starter file names expected by the app
 - `starlight-ride.mp4`
 - `magic-garden.mp4`
 - `rainbow-pasta-party.mp4`

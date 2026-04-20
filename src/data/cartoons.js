@@ -1,12 +1,12 @@
 export const cartoons = [
   {
-    id: 'starlight-ride',
-    title: 'Starlight Ride',
-    duration: '6 min',
-    description: 'A calm travel-time cartoon slot. Replace with Nika’s favorite video file.',
+    id: 'cartoon-1',
+    title: 'Cartoon 1',
+    duration: '8 min 37 sec',
+    description: 'First real offline cartoon, compressed for smoother playback on a cheap tablet.',
     fileName: 'starlight-ride.mp4',
     src: '/videos/starlight-ride.mp4',
-    emoji: '🌟',
+    emoji: '🎬',
     color: 'pink',
   },
   {
