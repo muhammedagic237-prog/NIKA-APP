@@ -38,8 +38,16 @@ function HomePanel({ onOpenCartoons, onOpenGames }) {
             A cheerful little pink world for travel days. Big buttons, smooth local cartoons, and
             tiny games that feel friendly, soft, and easy to use.
           </p>
+          <div className="hero-charms">
+            <span className="hero-charm">✨ Pretty</span>
+            <span className="hero-charm">🎀 Offline</span>
+            <span className="hero-charm">👑 Princess Mode</span>
+          </div>
         </div>
-        <div className="hero-badge">👑</div>
+        <div className="hero-badge-wrap">
+          <div className="hero-badge">👑</div>
+          <span className="hero-badge-label">Made for Nika</span>
+        </div>
       </section>
 
       <section className="feature-grid">
@@ -67,6 +75,7 @@ function HomePanel({ onOpenCartoons, onOpenGames }) {
             <li>simple, cheerful, and internet-free once installed</li>
           </ul>
         </div>
+        <div className="mini-ribbon">Pink, pretty, and built just for her</div>
       </section>
     </section>
   )
