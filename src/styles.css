@@ -178,9 +178,12 @@ code {
   animation: bob 1.1s ease-in-out infinite alternate;
 }
 
-.splash-screen__crown {
-  font-size: 3.2rem;
-  margin-bottom: 6px;
+.splash-screen__logo {
+  width: 108px;
+  height: 108px;
+  margin: 2px auto 8px;
+  display: block;
+  filter: drop-shadow(0 12px 26px rgba(190, 24, 93, 0.18));
   animation: bounce-soft 1s ease-in-out infinite alternate;
 }
 
@@ -297,6 +300,13 @@ code {
   gap: 10px;
 }
 
+.hero-logo {
+  width: 112px;
+  height: 112px;
+  display: block;
+  filter: drop-shadow(0 14px 32px rgba(236, 72, 153, 0.2));
+}
+
 .hero-badge-label {
   padding: 6px 10px;
   border-radius: 999px;
@@ -326,17 +336,6 @@ code {
   color: #be185d;
 }
 
-.hero-badge {
-  width: 96px;
-  height: 96px;
-  border-radius: 30px;
-  background: linear-gradient(135deg, #fbcfe8, #ec4899);
-  display: grid;
-  place-items: center;
-  font-size: 2.9rem;
-  box-shadow: 0 14px 32px rgba(236, 72, 153, 0.26);
-  border: 2px solid rgba(255, 255, 255, 0.5);
-}
 
 .feature-grid {
   display: grid;

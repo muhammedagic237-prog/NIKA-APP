@@ -1,10 +1,15 @@
 {
-  "name": "Nika's World",
+  "id": "/",
+  "name": "NIKA's APP",
   "short_name": "Nika",
+  "description": "A cheerful offline cartoon and mini-game app made just for Princess Nika.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#fff7fb",
-  "theme_color": "#f472b6",
+  "display_override": ["standalone", "window-controls-overlay"],
+  "orientation": "portrait-primary",
+  "background_color": "#fff4fb",
+  "theme_color": "#ec4899",
   "icons": [
     {
       "src": "/icons/icon.svg",

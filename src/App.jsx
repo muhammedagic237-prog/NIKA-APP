@@ -12,7 +12,7 @@ function SplashScreen() {
       <div className="splash-screen__glow splash-screen__glow--two" />
       <div className="splash-screen__card">
         <div className="splash-screen__sparkles">✨ 💖 ✨</div>
-        <div className="splash-screen__crown">👑</div>
+        <img className="splash-screen__logo" src="/icons/logo-badge.svg" alt="" />
         <p className="splash-screen__hello">Welcome princess</p>
         <h1 className="splash-screen__title">NIKA&apos;s APP</h1>
         <p className="splash-screen__subtitle">Cartoons, smiles, and tiny games just for Nika</p>
@@ -45,7 +45,7 @@ function HomePanel({ onOpenCartoons, onOpenGames }) {
           </div>
         </div>
         <div className="hero-badge-wrap">
-          <div className="hero-badge">👑</div>
+          <img className="hero-logo" src="/icons/logo-badge.svg" alt="Nika's App logo" />
           <span className="hero-badge-label">Made for Nika</span>
         </div>
       </section>

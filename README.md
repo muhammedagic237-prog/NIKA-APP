@@ -1,6 +1,6 @@
-# Nika's World
+# NIKA's APP
 
-A lightweight custom kid app for a cheap tablet.
+A lightweight custom princess kid app for a cheap tablet.
 
 ## What it is
 - React + Vite app
@@ -45,3 +45,20 @@ npm run build
 
 ## Tablet use
 For the cheap tablet use case, the important rule is to keep video files reasonably sized and encoded in a format the tablet can play well. MP4/H.264 is the safest default.
+
+## Install on tablet
+1. Build the app with `npm run build`
+2. Serve or copy the built app to the tablet-accessible location
+3. Open it in Chrome on the tablet
+4. Use `Add to Home screen` / `Install app`
+5. Launch it from the new home screen icon
+
+## Quick tablet test checklist
+- splash screen appears and fades after about 2.5 seconds
+- app opens in portrait cleanly
+- home screen icon looks correct
+- cartoons tab opens without layout glitches
+- games tab buttons are easy to tap
+- bottom navigation stays visible and readable
+- video playback starts smoothly once cartoons are added
+- app still works with internet turned off after install

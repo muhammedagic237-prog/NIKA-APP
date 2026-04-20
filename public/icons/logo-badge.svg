@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fffdfd"/>
+      <stop offset="100%" stop-color="#ffd7eb"/>
+    </linearGradient>
+    <linearGradient id="pink" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fb7185"/>
+      <stop offset="100%" stop-color="#db2777"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="360" height="360" rx="92" fill="url(#panel)"/>
+  <circle cx="180" cy="178" r="112" fill="#fff4fa"/>
+  <path d="M104 234c0-40 31-70 68-70 18 0 34 7 46 18 12-11 28-18 46-18 37 0 68 30 68 70 0 39-31 66-85 96l-29 16-29-16c-54-30-85-57-85-96z" fill="url(#pink)" opacity="0.95"/>
+  <path d="M110 144l24-60 46 34 46-34 24 60h-19l-8 18H137l-8-18z" fill="url(#gold)" stroke="#b45309" stroke-width="10" stroke-linejoin="round"/>
+  <circle cx="135" cy="96" r="10" fill="#fffef5"/>
+  <circle cx="180" cy="119" r="10" fill="#fffef5"/>
+  <circle cx="225" cy="96" r="10" fill="#fffef5"/>
+</svg>
