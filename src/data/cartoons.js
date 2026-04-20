@@ -1,7 +1,7 @@
 export const cartoons = [
   {
-    id: 'cartoon-1',
-    title: 'Cartoon 1',
+    id: 'rumi-1',
+    title: 'RUMI 1',
     duration: '8 min 37 sec',
     description: 'First real offline cartoon, compressed for smoother playback on a cheap tablet.',
     fileName: 'starlight-ride.mp4',
