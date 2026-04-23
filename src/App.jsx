@@ -2,115 +2,163 @@ import { useEffect, useMemo, useState } from 'react'
 import CartoonPlayer from './components/CartoonPlayer'
 import BalloonPop from './components/BalloonPop'
 import MemoryMatch from './components/MemoryMatch'
-import TabBar from './components/TabBar'
 import { cartoons } from './data/cartoons'
 
 function SplashScreen() {
   return (
     <div className="splash-screen" aria-hidden="true">
-      <div className="splash-screen__glow splash-screen__glow--one" />
-      <div className="splash-screen__glow splash-screen__glow--two" />
-      <div className="splash-screen__card">
-        <div className="splash-screen__sparkles">✨ 💖 ✨</div>
-        <img className="splash-screen__logo" src="/icons/logo-badge.svg" alt="" />
-        <p className="splash-screen__hello">Welcome princess</p>
-        <h1 className="splash-screen__title">NIKA&apos;s APP</h1>
-        <p className="splash-screen__subtitle">Cartoons, smiles, and tiny games just for Nika</p>
+      <div className="splash-cloud splash-cloud--one" />
+      <div className="splash-cloud splash-cloud--two" />
+      <div className="splash-cloud splash-cloud--three" />
+      <div className="splash-stars">✦ ✦ ✦</div>
+      <div className="splash-title-wrap">
+        <p className="splash-whisper">out of the clouds</p>
+        <h1 className="splash-cloud-title">Princess Nika</h1>
+        <p className="splash-subtitle">a dreamy little world of cartoons and play</p>
       </div>
     </div>
   )
 }
 
-function HomePanel({ onOpenCartoons, onOpenGames }) {
-  const cartoonCount = cartoons.length
-
+function HomeMenu({ onOpenCartoons, onOpenGames, cartoonCount }) {
   return (
-    <section className="home-stack">
+    <section className="home-menu">
       <div className="home-topbar">
         <span className="princess-badge">Princess Nika</span>
       </div>
 
-      <section className="hero-card">
-        <div className="hero-copy">
-          <p className="eyebrow">Nika&apos;s dreamy tablet app</p>
-          <h1>NIKA&apos;s APP</h1>
-          <p>
-            A cheerful little pink world for travel days. Big buttons, smooth local cartoons, and
-            tiny games that feel friendly, soft, and easy to use.
-          </p>
-          <div className="hero-charms">
-            <span className="hero-charm">✨ Pretty</span>
-            <span className="hero-charm">🎀 Offline</span>
-            <span className="hero-charm">👑 Princess Mode</span>
-          </div>
-        </div>
-        <div className="hero-badge-wrap">
-          <img className="hero-logo" src="/icons/logo-badge.svg" alt="Nika's App logo" />
-          <span className="hero-badge-label">Made for Nika</span>
-        </div>
-      </section>
-
-      <section className="feature-grid">
-        <button className="feature-card feature-card--pink" onClick={onOpenCartoons}>
-          <span className="feature-card__icon">🎬</span>
-          <strong>Cartoons</strong>
-          <span>{cartoonCount} offline favorites ready for Nika&apos;s tablet.</span>
-        </button>
-
-        <button className="feature-card feature-card--rose" onClick={onOpenGames}>
-          <span className="feature-card__icon">🎮</span>
-          <strong>Mini-games</strong>
-          <span>Memory Match and Balloon Pop, sweet, simple, and touch-friendly.</span>
-        </button>
-      </section>
-
-      <section className="panel quick-guide">
+      <section className="menu-intro panel">
         <div>
-          <p className="eyebrow">Made with love</p>
-          <h2>A little princess tablet world</h2>
-          <ul>
-            <li>offline cartoon shelf for easy travel watching</li>
-            <li>big buttons and soft visuals for little hands</li>
-            <li>lightweight build for a cheaper tablet</li>
-            <li>simple, cheerful, and internet-free once installed</li>
-          </ul>
+          <p className="eyebrow">Welcome back</p>
+          <h1 className="menu-title">Princess Nika</h1>
+          <p className="menu-copy">
+            Pick something lovely. Watch a cartoon or open the play room and choose a game.
+          </p>
         </div>
-        <div className="mini-ribbon">Pink, pretty, and built just for her</div>
+        <img className="menu-logo" src="/icons/logo-badge.svg" alt="Princess Nika app logo" />
+      </section>
+
+      <section className="menu-grid">
+        <button className="menu-card menu-card--cartoons" onClick={onOpenCartoons}>
+          <span className="menu-card__icon">🎬</span>
+          <strong>Cartoons</strong>
+          <span>{cartoonCount} offline favorites ready to watch</span>
+        </button>
+
+        <button className="menu-card menu-card--games" onClick={onOpenGames}>
+          <span className="menu-card__icon">🪄</span>
+          <strong>Play Room</strong>
+          <span>Choose one mini-game and start only when you are ready</span>
+        </button>
       </section>
     </section>
   )
 }
 
+function GamesMenu({ onBack, onSelectGame }) {
+  const games = [
+    {
+      id: 'memory',
+      title: 'Memory Match',
+      icon: '👑',
+      description: 'Flip princess cards and find the matching pairs.',
+    },
+    {
+      id: 'balloons',
+      title: 'Balloon Pop',
+      icon: '🎈',
+      description: 'Pop floating balloons and catch sparkly bonus hearts.',
+    },
+  ]
+
+  return (
+    <section className="games-menu-stack">
+      <div className="section-topbar">
+        <button className="secondary-button" onClick={onBack}>Back</button>
+        <span className="princess-badge">Princess Nika</span>
+      </div>
+
+      <section className="panel game-menu-panel">
+        <p className="eyebrow">Play room</p>
+        <h2>Choose a game</h2>
+        <p className="menu-copy">Pick one game first, then start when you want. No clutter, no autoplay.</p>
+      </section>
+
+      <div className="game-choice-grid">
+        {games.map((game) => (
+          <button key={game.id} className="game-choice-card" onClick={() => onSelectGame(game.id)}>
+            <span className="game-choice-card__icon">{game.icon}</span>
+            <strong>{game.title}</strong>
+            <span>{game.description}</span>
+          </button>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+function GameScreen({ game, onBack }) {
+  return (
+    <section className="games-stack">
+      <div className="section-topbar">
+        <button className="secondary-button" onClick={onBack}>Back to play room</button>
+        <span className="princess-badge">Princess Nika</span>
+      </div>
+      {game === 'memory' ? <MemoryMatch /> : <BalloonPop />}
+    </section>
+  )
+}
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState('home')
+  const [view, setView] = useState('home')
+  const [selectedGame, setSelectedGame] = useState(null)
   const [showSplash, setShowSplash] = useState(true)
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
       setShowSplash(false)
-    }, 2500)
+    }, 3000)
 
     return () => window.clearTimeout(timer)
   }, [])
 
   const activeView = useMemo(() => {
-    if (activeTab === 'cartoons') return <CartoonPlayer />
-    if (activeTab === 'games') {
+    if (view === 'cartoons') {
       return (
-        <section className="games-stack">
-          <div className="section-copy section-copy--centered">
-            <p className="eyebrow">Mini-games</p>
-            <h2>Pretty little games for little fingers</h2>
-            <p>Soft colors, easy taps, no clutter, no ads, and no internet needed.</p>
+        <section className="view-stack">
+          <div className="section-topbar">
+            <button className="secondary-button" onClick={() => setView('home')}>Back</button>
+            <span className="princess-badge">Princess Nika</span>
           </div>
-          <MemoryMatch />
-          <BalloonPop />
+          <CartoonPlayer />
         </section>
       )
     }
 
-    return <HomePanel onOpenCartoons={() => setActiveTab('cartoons')} onOpenGames={() => setActiveTab('games')} />
-  }, [activeTab])
+    if (view === 'games-menu') {
+      return (
+        <GamesMenu
+          onBack={() => setView('home')}
+          onSelectGame={(gameId) => {
+            setSelectedGame(gameId)
+            setView('game')
+          }}
+        />
+      )
+    }
+
+    if (view === 'game' && selectedGame) {
+      return <GameScreen game={selectedGame} onBack={() => setView('games-menu')} />
+    }
+
+    return (
+      <HomeMenu
+        cartoonCount={cartoons.length}
+        onOpenCartoons={() => setView('cartoons')}
+        onOpenGames={() => setView('games-menu')}
+      />
+    )
+  }, [view, selectedGame])
 
   return (
     <div className="app-shell">
@@ -118,9 +166,7 @@ export default function App() {
       <div className="app-shell__bg app-shell__bg--one" />
       <div className="app-shell__bg app-shell__bg--two" />
       <div className="app-shell__bg app-shell__bg--three" />
-
       <main className="app-main">{activeView}</main>
-      <TabBar activeTab={activeTab} onChange={setActiveTab} />
     </div>
   )
 }
