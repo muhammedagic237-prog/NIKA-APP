@@ -28,6 +28,8 @@ export default function MemoryMatch() {
   const [started, setStarted] = useState(false)
   const [previewing, setPreviewing] = useState(false)
   const [busy, setBusy] = useState(false)
+  const [matchBurst, setMatchBurst] = useState(null)
+  const [message, setMessage] = useState('')
 
   const resetGame = () => {
     setDeck(createDeck())
@@ -37,6 +39,8 @@ export default function MemoryMatch() {
     setBusy(false)
     setStarted(false)
     setPreviewing(false)
+    setMatchBurst(null)
+    setMessage('')
   }
 
   useEffect(() => {
@@ -74,10 +78,13 @@ export default function MemoryMatch() {
         ),
       )
       setMatches((value) => value + 1)
+      setMatchBurst(first.icon)
+      setMessage('Perfect match!')
       setOpenCards([])
       return
     }
 
+    setMessage('Try again')
     setBusy(true)
     const timer = window.setTimeout(() => {
       setOpenCards([])
@@ -88,6 +95,18 @@ export default function MemoryMatch() {
   }, [openCards, deck, busy])
 
   const finished = useMemo(() => matches === icons.length, [matches])
+
+  useEffect(() => {
+    if (!matchBurst) return
+    const timer = window.setTimeout(() => setMatchBurst(null), 900)
+    return () => window.clearTimeout(timer)
+  }, [matchBurst])
+
+  useEffect(() => {
+    if (!message) return
+    const timer = window.setTimeout(() => setMessage(''), 900)
+    return () => window.clearTimeout(timer)
+  }, [message])
 
   const startGame = () => {
     if (started || previewing) return
@@ -117,6 +136,7 @@ export default function MemoryMatch() {
       <div className="stats-row">
         <span>Moves: {moves}</span>
         <span>Pairs: {matches}/{icons.length}</span>
+        <span>Progress: {Math.round((matches / icons.length) * 100)}%</span>
       </div>
 
       <div className="game-ribbon">Watch the cards, remember them, then match them</div>
@@ -127,6 +147,16 @@ export default function MemoryMatch() {
           <strong>Ready to play Memory Match?</strong>
           <p>Tap start, get a tiny peek at all the cards, then begin.</p>
           <button className="primary-button" onClick={startGame}>Start game</button>
+        </div>
+      ) : null}
+
+      {message ? <div className={`game-feedback ${message === 'Perfect match!' ? 'is-success' : 'is-soft'}`}>{message}</div> : null}
+
+      {matchBurst ? (
+        <div className="match-burst" aria-hidden="true">
+          <span>{matchBurst}</span>
+          <span>✨</span>
+          <span>{matchBurst}</span>
         </div>
       ) : null}
 
@@ -145,7 +175,7 @@ export default function MemoryMatch() {
         })}
       </div>
 
-      {finished ? <div className="success-banner">Lovely work. You found every pair. 👑</div> : null}
+      {finished ? <div className="success-banner">Lovely work. You found every pair. 👑✨</div> : null}
     </div>
   )
 }

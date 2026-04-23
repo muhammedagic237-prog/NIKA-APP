@@ -24,6 +24,8 @@ export default function BalloonPop() {
   const [best, setBest] = useState(0)
   const [balloons, setBalloons] = useState([])
   const [started, setStarted] = useState(false)
+  const [lastPop, setLastPop] = useState(null)
+  const [message, setMessage] = useState('')
 
   useEffect(() => {
     if (!running) return
@@ -65,6 +67,8 @@ export default function BalloonPop() {
     setRunning(true)
     setTimeLeft(25)
     setScore(0)
+    setMessage('')
+    setLastPop(null)
     setBalloons([
       createBalloon('start-1'),
       createBalloon('start-2'),
@@ -72,17 +76,34 @@ export default function BalloonPop() {
     ])
   }
 
-  const popBalloon = (id, points) => {
+  const popBalloon = (id, points, emoji) => {
     if (!running) return
+    const popped = balloons.find((balloon) => balloon.id === id)
     setBalloons((current) => current.filter((balloon) => balloon.id !== id))
     setScore((value) => value + points)
+    if (popped) {
+      setLastPop({ id: `${id}-burst`, left: popped.left, top: popped.top, emoji })
+    }
+    setMessage(points > 1 ? 'Sparkly bonus!' : 'Pop!')
   }
 
   const status = useMemo(() => {
     if (!started) return 'Tap start when you want to begin.'
     if (running) return 'Pop the floating balloons and catch the hearts.'
-    return 'Round finished. You can play again.'
-  }, [started, running])
+    return score >= best && score > 0 ? 'New best round. Lovely.' : 'Round finished. You can play again.'
+  }, [started, running, score, best])
+
+  useEffect(() => {
+    if (!lastPop) return
+    const timer = window.setTimeout(() => setLastPop(null), 520)
+    return () => window.clearTimeout(timer)
+  }, [lastPop])
+
+  useEffect(() => {
+    if (!message) return
+    const timer = window.setTimeout(() => setMessage(''), 620)
+    return () => window.clearTimeout(timer)
+  }, [message])
 
   return (
     <div className="game-card-shell game-card-shell--balloons">
@@ -101,6 +122,7 @@ export default function BalloonPop() {
         <span>Time: {timeLeft}s</span>
         <span>Score: {score}</span>
         <span>Best: {best}</span>
+        <span>Targets: {balloons.length}</span>
       </div>
 
       <div className="game-ribbon">Tap the balloons and hearts before they drift away</div>
@@ -114,17 +136,25 @@ export default function BalloonPop() {
         </div>
       ) : null}
 
+      {message ? <div className={`game-feedback ${message === 'Sparkly bonus!' ? 'is-success' : 'is-soft'}`}>{message}</div> : null}
+
       <div className={`balloon-area ${!started ? 'is-dimmed' : ''}`}>
         {balloons.map((balloon) => (
           <button
             key={balloon.id}
             className="balloon"
             style={{ left: balloon.left, top: balloon.top, background: balloon.color, '--drift': balloon.drift }}
-            onClick={() => popBalloon(balloon.id, balloon.points)}
+            onClick={() => popBalloon(balloon.id, balloon.points, balloon.emoji)}
           >
             {balloon.emoji}
           </button>
         ))}
+        {lastPop ? (
+          <div className="pop-burst" style={{ left: lastPop.left, top: lastPop.top }} aria-hidden="true">
+            <span>{lastPop.emoji}</span>
+            <span>✨</span>
+          </div>
+        ) : null}
         <div className="balloon-help">{status}</div>
       </div>
     </div>
