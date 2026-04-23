@@ -5,11 +5,15 @@ import CartoonPlayer from './components/CartoonPlayer'
 import { cartoons } from './data/cartoons'
 
 function SplashScreen() {
+  const letters = ['P', 'r', 'i', 'n', 'c', 'e', 's', 's', ' ', 'N', 'i', 'k', 'a']
+
   return (
     <div className="splash-screen" aria-hidden="true">
       <div className="mist mist--one" />
       <div className="mist mist--two" />
       <div className="mist mist--three" />
+      <div className="mist mist--four" />
+      <div className="mist mist--five" />
       <div className="spark spark--one">✦</div>
       <div className="spark spark--two">✦</div>
       <div className="spark spark--three">✦</div>
@@ -20,7 +24,17 @@ function SplashScreen() {
         <div className="castle-silhouette__base" />
       </div>
       <div className="splash-core">
-        <h1 className="splash-neon-title">Princess Nika</h1>
+        <h1 className="splash-neon-title" aria-label="Princess Nika">
+          {letters.map((letter, index) => (
+            <span
+              key={`${letter}-${index}`}
+              className={`splash-letter ${letter === ' ' ? 'is-space' : ''}`}
+              style={{ animationDelay: `${0.22 + index * 0.08}s` }}
+            >
+              {letter === ' ' ? '\u00A0' : letter}
+            </span>
+          ))}
+        </h1>
       </div>
     </div>
   )
