@@ -10,6 +10,7 @@
   --blue: #79d8ff;
   --blue-soft: #a9eeff;
   --neon: #8f5dff;
+  --panel: rgba(31, 11, 43, 0.82);
   --panel-border: rgba(125, 214, 255, 0.24);
 }
 
@@ -22,7 +23,6 @@ body,
 #root {
   margin: 0;
   min-height: 100%;
-  overflow-x: hidden;
 }
 
 body {
@@ -90,8 +90,7 @@ button {
 }
 
 .panel,
-.game-card-shell,
-.game-window {
+.game-card-shell {
   background: linear-gradient(180deg, rgba(33, 12, 48, 0.9), rgba(23, 9, 37, 0.88));
   border: 1px solid var(--panel-border);
   border-radius: 30px;
@@ -101,10 +100,6 @@ button {
     0 18px 50px rgba(0, 0, 0, 0.34),
     0 0 34px rgba(255, 79, 195, 0.12);
   backdrop-filter: blur(16px);
-}
-
-.game-window {
-  overflow: hidden;
 }
 
 .splash-screen {
@@ -162,72 +157,21 @@ button {
 .spark--two { top: 20%; right: 26%; font-size: 1.4rem; animation-delay: 0.35s; }
 .spark--three { bottom: 26%; left: 50%; font-size: 1.2rem; animation-delay: 0.7s; }
 
-.castle-silhouette {
-  position: absolute;
-  left: 50%;
-  bottom: 20%;
-  transform: translateX(-50%);
-  width: min(72vw, 430px);
-  height: 190px;
-  opacity: 0.84;
-  filter: drop-shadow(0 0 26px rgba(255, 79, 195, 0.18));
-}
-
-.castle-silhouette__tower,
-.castle-silhouette__base {
-  position: absolute;
-  bottom: 0;
-  background: linear-gradient(180deg, rgba(46, 17, 62, 0.96), rgba(19, 8, 29, 0.98));
-  border: 1px solid rgba(121, 216, 255, 0.12);
-}
-
-.castle-silhouette__tower {
-  width: 72px;
-  border-radius: 18px 18px 0 0;
-}
-
-.castle-silhouette__tower::before {
-  content: '';
-  position: absolute;
-  top: -24px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 18px solid transparent;
-  border-right: 18px solid transparent;
-  border-bottom: 24px solid rgba(46, 17, 62, 0.98);
-}
-
-.castle-silhouette__tower--left {
-  left: 40px;
-  height: 116px;
-}
-
-.castle-silhouette__tower--center {
-  left: 50%;
-  transform: translateX(-50%);
-  width: 94px;
-  height: 150px;
-}
-
-.castle-silhouette__tower--right {
-  right: 40px;
-  height: 126px;
-}
-
-.castle-silhouette__base {
-  left: 50%;
-  transform: translateX(-50%);
-  width: 78%;
-  height: 74px;
-  border-radius: 18px 18px 0 0;
-}
-
 .splash-core {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   text-align: center;
+  padding: 24px;
+}
+
+.splash-whisper {
+  margin: 0 0 12px;
+  color: rgba(255, 163, 226, 0.86);
+  font-weight: 800;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  animation: title-soft 1s ease both;
 }
 
 .splash-neon-title {
@@ -250,10 +194,6 @@ button {
 .view-stack {
   display: grid;
   gap: 18px;
-}
-
-.games-stack--play {
-  overflow: hidden;
 }
 
 .home-topbar,
@@ -300,22 +240,22 @@ button {
 .muted,
 .instant-cartoon-button__meta,
 .video-fallback p,
-.menu-card span,
-.game-launch-label {
+.game-choice-card span,
+.menu-card span {
   color: #f3c7e7;
 }
 
 .menu-grid,
-.instant-cartoon-grid,
-.game-launch-grid {
+.game-choice-grid,
+.instant-cartoon-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
 .menu-card,
-.instant-cartoon-button,
-.game-launch-button {
+.game-choice-card,
+.instant-cartoon-button {
   position: relative;
   overflow: hidden;
   text-align: left;
@@ -329,7 +269,7 @@ button {
 }
 
 .menu-card,
-.game-launch-button {
+.game-choice-card {
   background: linear-gradient(135deg, rgba(255, 79, 195, 0.24), rgba(121, 216, 255, 0.12));
   border: 1px solid rgba(121, 216, 255, 0.18);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.28), 0 0 24px rgba(255, 79, 195, 0.12);
@@ -343,10 +283,10 @@ button {
 
 .menu-card:hover,
 .menu-card:focus-visible,
+.game-choice-card:hover,
+.game-choice-card:focus-visible,
 .instant-cartoon-button:hover,
 .instant-cartoon-button:focus-visible,
-.game-launch-button:hover,
-.game-launch-button:focus-visible,
 .primary-button:hover,
 .primary-button:focus-visible,
 .secondary-button:hover,
@@ -362,31 +302,13 @@ button {
 }
 
 .menu-card__icon,
-.instant-cartoon-button__emoji,
-.game-launch-button__icon {
+.game-choice-card__icon,
+.instant-cartoon-button__emoji {
   font-size: 2rem;
 }
 
-.game-launch-grid {
-  justify-items: center;
-}
-
-.game-launch-tile {
-  display: grid;
-  justify-items: center;
-  gap: 10px;
-}
-
-.game-launch-button {
-  width: 120px;
-  height: 120px;
-  border-radius: 28px;
-  place-items: center;
-}
-
-.game-launch-label {
-  font-weight: 800;
-  text-align: center;
+.instant-cartoon-button__title {
+  font-weight: 900;
 }
 
 .eyebrow,
@@ -516,13 +438,12 @@ button {
   min-height: 300px;
   background: linear-gradient(180deg, rgba(12, 12, 28, 0.94), rgba(32, 10, 48, 0.96));
   border: 1px solid rgba(121, 216, 255, 0.18);
-  touch-action: none;
-  overscroll-behavior: contain;
 }
 
 .breaker-area {
-  width: min(100%, 360px);
+  width: 100%;
   height: 430px;
+  max-width: 360px;
   margin: 0 auto;
   box-shadow: inset 0 0 30px rgba(121, 216, 255, 0.08), 0 0 24px rgba(121, 216, 255, 0.08);
 }
@@ -672,6 +593,11 @@ button {
   }
 }
 
+@keyframes title-soft {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
 @keyframes mist-float {
   from { transform: translate(-20px, 20px); opacity: 0.25; }
   to { transform: translate(10px, -14px); opacity: 0.95; }
@@ -715,12 +641,16 @@ button {
 
 @media (max-width: 640px) {
   .menu-grid,
+  .game-choice-grid,
   .instant-cartoon-grid,
-  .game-launch-grid,
   .game-card-shell__head,
   .section-topbar,
   .cartoon-topbar {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .breaker-area {
+    max-width: 100%;
   }
 }
