@@ -1,20 +1,21 @@
 import { useEffect, useMemo, useState } from 'react'
-import CartoonPlayer from './components/CartoonPlayer'
 import BalloonPop from './components/BalloonPop'
-import MemoryMatch from './components/MemoryMatch'
+import BlockBreaker from './components/BlockBreaker'
+import CartoonPlayer from './components/CartoonPlayer'
 import { cartoons } from './data/cartoons'
 
 function SplashScreen() {
   return (
     <div className="splash-screen" aria-hidden="true">
-      <div className="splash-cloud splash-cloud--one" />
-      <div className="splash-cloud splash-cloud--two" />
-      <div className="splash-cloud splash-cloud--three" />
-      <div className="splash-stars">✦ ✦ ✦</div>
-      <div className="splash-title-wrap">
-        <p className="splash-whisper">out of the clouds</p>
-        <h1 className="splash-cloud-title">Princess Nika</h1>
-        <p className="splash-subtitle">a dreamy little world of cartoons and play</p>
+      <div className="mist mist--one" />
+      <div className="mist mist--two" />
+      <div className="mist mist--three" />
+      <div className="spark spark--one">✦</div>
+      <div className="spark spark--two">✦</div>
+      <div className="spark spark--three">✦</div>
+      <div className="splash-core">
+        <p className="splash-whisper">from the pink mist</p>
+        <h1 className="splash-neon-title">Princess Nika</h1>
       </div>
     </div>
   )
@@ -27,29 +28,22 @@ function HomeMenu({ onOpenCartoons, onOpenGames, cartoonCount }) {
         <span className="princess-badge">Princess Nika</span>
       </div>
 
-      <section className="menu-intro panel">
-        <div>
-          <p className="eyebrow">Welcome back</p>
-          <h1 className="menu-title">Princess Nika</h1>
-          <p className="menu-copy">
-            Pick something lovely. Watch a cartoon or open the play room and choose a game.
-          </p>
+      <section className="panel home-panel home-panel--simple">
+        <h1 className="menu-title">Princess Nika</h1>
+        <p className="menu-copy">Choose cartoons or games.</p>
+        <div className="menu-grid">
+          <button className="menu-card menu-card--cartoons" onClick={onOpenCartoons}>
+            <span className="menu-card__icon">🎬</span>
+            <strong>Movies</strong>
+            <span>{cartoonCount} offline cartoons</span>
+          </button>
+
+          <button className="menu-card menu-card--games" onClick={onOpenGames}>
+            <span className="menu-card__icon">🕹️</span>
+            <strong>Games</strong>
+            <span>Open the arcade room</span>
+          </button>
         </div>
-        <img className="menu-logo" src="/icons/logo-badge.svg" alt="Princess Nika app logo" />
-      </section>
-
-      <section className="menu-grid">
-        <button className="menu-card menu-card--cartoons" onClick={onOpenCartoons}>
-          <span className="menu-card__icon">🎬</span>
-          <strong>Cartoons</strong>
-          <span>{cartoonCount} offline favorites ready to watch</span>
-        </button>
-
-        <button className="menu-card menu-card--games" onClick={onOpenGames}>
-          <span className="menu-card__icon">🪄</span>
-          <strong>Play Room</strong>
-          <span>Choose one mini-game and start only when you are ready</span>
-        </button>
       </section>
     </section>
   )
@@ -58,16 +52,16 @@ function HomeMenu({ onOpenCartoons, onOpenGames, cartoonCount }) {
 function GamesMenu({ onBack, onSelectGame }) {
   const games = [
     {
-      id: 'memory',
-      title: 'Memory Match',
-      icon: '👑',
-      description: 'Flip princess cards and find the matching pairs.',
+      id: 'breaker',
+      title: 'Block Breaker',
+      icon: '🟦',
+      description: 'Destroy glowing blocks with the little ball.',
     },
     {
       id: 'balloons',
       title: 'Balloon Pop',
       icon: '🎈',
-      description: 'Pop floating balloons and catch sparkly bonus hearts.',
+      description: 'A brighter neon balloon game with more motion and color.',
     },
   ]
 
@@ -79,9 +73,8 @@ function GamesMenu({ onBack, onSelectGame }) {
       </div>
 
       <section className="panel game-menu-panel">
-        <p className="eyebrow">Play room</p>
-        <h2>Choose a game</h2>
-        <p className="menu-copy">Pick one game first, then start when you want. No clutter, no autoplay.</p>
+        <h2>Arcade Room</h2>
+        <p className="menu-copy">Pick one game and start when ready.</p>
       </section>
 
       <div className="game-choice-grid">
@@ -101,10 +94,10 @@ function GameScreen({ game, onBack }) {
   return (
     <section className="games-stack">
       <div className="section-topbar">
-        <button className="secondary-button" onClick={onBack}>Back to play room</button>
+        <button className="secondary-button" onClick={onBack}>Back to games</button>
         <span className="princess-badge">Princess Nika</span>
       </div>
-      {game === 'memory' ? <MemoryMatch /> : <BalloonPop />}
+      {game === 'breaker' ? <BlockBreaker /> : <BalloonPop />}
     </section>
   )
 }
@@ -115,10 +108,7 @@ export default function App() {
   const [showSplash, setShowSplash] = useState(true)
 
   useEffect(() => {
-    const timer = window.setTimeout(() => {
-      setShowSplash(false)
-    }, 3000)
-
+    const timer = window.setTimeout(() => setShowSplash(false), 3000)
     return () => window.clearTimeout(timer)
   }, [])
 
@@ -161,7 +151,7 @@ export default function App() {
   }, [view, selectedGame])
 
   return (
-    <div className="app-shell">
+    <div className="app-shell app-shell--neon">
       {showSplash ? <SplashScreen /> : null}
       <div className="app-shell__bg app-shell__bg--one" />
       <div className="app-shell__bg app-shell__bg--two" />
