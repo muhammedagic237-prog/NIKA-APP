@@ -197,7 +197,14 @@ export default function BlockBreaker() {
         ref={areaRef}
         className={`breaker-area ${!started ? 'is-dimmed' : ''}`}
         onMouseMove={(event) => movePaddle(event.clientX)}
-        onTouchMove={(event) => movePaddle(event.touches[0].clientX)}
+        onTouchStart={(event) => {
+          event.preventDefault()
+          movePaddle(event.touches[0].clientX)
+        }}
+        onTouchMove={(event) => {
+          event.preventDefault()
+          movePaddle(event.touches[0].clientX)
+        }}
       >
         <div className="breaker-wall">
           {bricks.map((brick) => (

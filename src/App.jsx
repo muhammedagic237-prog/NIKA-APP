@@ -13,8 +13,13 @@ function SplashScreen() {
       <div className="spark spark--one">✦</div>
       <div className="spark spark--two">✦</div>
       <div className="spark spark--three">✦</div>
+      <div className="castle-silhouette">
+        <div className="castle-silhouette__tower castle-silhouette__tower--left" />
+        <div className="castle-silhouette__tower castle-silhouette__tower--center" />
+        <div className="castle-silhouette__tower castle-silhouette__tower--right" />
+        <div className="castle-silhouette__base" />
+      </div>
       <div className="splash-core">
-        <p className="splash-whisper">from the pink mist</p>
         <h1 className="splash-neon-title">Princess Nika</h1>
       </div>
     </div>
@@ -51,18 +56,8 @@ function HomeMenu({ onOpenCartoons, onOpenGames, cartoonCount }) {
 
 function GamesMenu({ onBack, onSelectGame }) {
   const games = [
-    {
-      id: 'breaker',
-      title: 'Block Breaker',
-      icon: '🟦',
-      description: 'Destroy glowing blocks with the little ball.',
-    },
-    {
-      id: 'balloons',
-      title: 'Balloon Pop',
-      icon: '🎈',
-      description: 'A brighter neon balloon game with more motion and color.',
-    },
+    { id: 'breaker', title: 'Block Breaker', icon: '🟦' },
+    { id: 'balloons', title: 'Balloon Pop', icon: '🎈' },
   ]
 
   return (
@@ -74,16 +69,16 @@ function GamesMenu({ onBack, onSelectGame }) {
 
       <section className="panel game-menu-panel">
         <h2>Arcade Room</h2>
-        <p className="menu-copy">Pick one game and start when ready.</p>
       </section>
 
-      <div className="game-choice-grid">
+      <div className="game-launch-grid">
         {games.map((game) => (
-          <button key={game.id} className="game-choice-card" onClick={() => onSelectGame(game.id)}>
-            <span className="game-choice-card__icon">{game.icon}</span>
-            <strong>{game.title}</strong>
-            <span>{game.description}</span>
-          </button>
+          <div key={game.id} className="game-launch-tile">
+            <button className="game-launch-button" onClick={() => onSelectGame(game.id)}>
+              <span className="game-launch-button__icon">{game.icon}</span>
+            </button>
+            <span className="game-launch-label">{game.title}</span>
+          </div>
         ))}
       </div>
     </section>
@@ -92,12 +87,14 @@ function GamesMenu({ onBack, onSelectGame }) {
 
 function GameScreen({ game, onBack }) {
   return (
-    <section className="games-stack">
+    <section className="games-stack games-stack--play">
       <div className="section-topbar">
         <button className="secondary-button" onClick={onBack}>Back to games</button>
         <span className="princess-badge">Princess Nika</span>
       </div>
-      {game === 'breaker' ? <BlockBreaker /> : <BalloonPop />}
+      <div className="game-window">
+        {game === 'breaker' ? <BlockBreaker /> : <BalloonPop />}
+      </div>
     </section>
   )
 }
