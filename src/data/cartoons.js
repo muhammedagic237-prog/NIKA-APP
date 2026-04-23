@@ -10,13 +10,13 @@ export const cartoons = [
     color: 'pink',
   },
   {
-    id: 'magic-garden',
-    title: 'Magic Garden',
-    duration: '8 min',
-    description: 'A gentle story slot for offline watching on a cheap tablet.',
+    id: 'rumi-2',
+    title: 'RUMI 2',
+    duration: '13 min 11 sec',
+    description: 'Second real offline cartoon, compressed for smooth playback on a cheap tablet.',
     fileName: 'magic-garden.mp4',
     src: '/videos/magic-garden.mp4',
-    emoji: '🦋',
+    emoji: '🎀',
     color: 'purple',
   },
   {
