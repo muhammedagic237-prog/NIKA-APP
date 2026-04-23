@@ -13,13 +13,8 @@ function SplashScreen() {
       <div className="spark spark--one">✦</div>
       <div className="spark spark--two">✦</div>
       <div className="spark spark--three">✦</div>
-      <div className="castle-silhouette">
-        <div className="castle-silhouette__tower castle-silhouette__tower--left" />
-        <div className="castle-silhouette__tower castle-silhouette__tower--center" />
-        <div className="castle-silhouette__tower castle-silhouette__tower--right" />
-        <div className="castle-silhouette__base" />
-      </div>
       <div className="splash-core">
+        <p className="splash-whisper">from the pink mist</p>
         <h1 className="splash-neon-title">Princess Nika</h1>
       </div>
     </div>
